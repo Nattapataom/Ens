@@ -19,6 +19,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private static final double latCenterDOUBLE = 13.68426791;
     private static final double lngCenterDOUBLE = 101.06550694;
+    private double latMakerADouble,lngMakerADouble ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,8 +38,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
       intent.putExtra("nameLogin", strName);
 
 
-      intent.putExtra("douLat", 123.456);
-      intent.putExtra("douLng",789.123);
+      intent.putExtra("douLat", latMakerADouble);
+      intent.putExtra("douLng",lngMakerADouble);
       startActivity(intent);
   }
 
@@ -53,6 +55,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.moveCamera(CameraUpdateFactory
                 .newLatLngZoom(centerLatLng, 14));
          // Add a marker in Sydney and move the camera
+mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener(){
+   @Override
+    public  void onMapClick(LatLng latLng {
 
+       mMap.clear();
+
+       latMakerADouble = latLng.latitude;
+       lngMakerADouble = latLng.longitude;
+       LatLng markerLatLng1 = new LatLng(latMakerADouble, lngMakerADouble);
+       mMap.addMarker(new MarkerOptions()
+               .position(markerLatLng1)
+       .title("เหตุฯเกิดที่นี่ ?")
+       .snippet(Double.toString(latMakerADouble)+","+Double.toString(lngMakerADouble)));
+
+
+   }//event
+});
     }//second Method
 }//Main Method
