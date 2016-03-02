@@ -1,7 +1,9 @@
 package rru.taweevat.sunantha.nattapat.enssystem;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -9,6 +11,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.io.InputStream;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -18,13 +22,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maps);
+        setContentView(R.layout.my_maps);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+                .findFragmentById(R.id.fragment);
         mapFragment.getMapAsync(this);
     }// Main Method
 
+  public  void clickSentLocation (View view) {
+      Intent intent = new Intent(MapsActivity.this, InfromActivity.class);
+
+      String strName = getIntent().getStringExtra("nameLogin");
+      intent.putExtra("nameLogin", strName);
+
+
+      intent.putExtra("douLat", 123.456);
+      intent.putExtra("douLng",789.123);
+      startActivity(intent);
+  }
 
 
 

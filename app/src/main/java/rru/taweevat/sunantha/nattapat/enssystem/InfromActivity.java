@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -27,7 +28,7 @@ public class InfromActivity extends AppCompatActivity implements View.OnClickLis
 
     private String nameLoginString, dateString, phoneString, detailString, typeString,
             photourlString, videourlString, laString, longString;
-
+    private double latADouble, lngADouble;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +47,32 @@ public class InfromActivity extends AppCompatActivity implements View.OnClickLis
 
 
     } // main method
+
+    private  void showLatLng(){
+        Log.d("test", "Lat = " + latADouble);
+        Log.d("test", "Lng = " + lngADouble);
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        latADouble  = getIntent().getDoubleExtra("douLat",0);
+        lngADouble = getIntent().getDoubleExtra("douLng",0);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        latADouble  = getIntent().getDoubleExtra("douLat",0);
+        lngADouble = getIntent().getDoubleExtra("douLng",0);
+
+
+
+    }
 
     private void buttonController() {
 
@@ -93,7 +120,9 @@ public class InfromActivity extends AppCompatActivity implements View.OnClickLis
                 break;
             case R.id.button11:
                 // Add location
-                startActivity(new Intent(InfromActivity.this, MapsActivity.class));
+             Intent intent = new Intent(InfromActivity.this, MapsActivity.class);
+                intent.putExtra("nameLogin", nameLoginString);
+                startActivity(intent);
                 break;
             case R.id.button5:
                 //Update
@@ -106,14 +135,33 @@ public class InfromActivity extends AppCompatActivity implements View.OnClickLis
                     myAlertDialog.MyDialog(InfromActivity.this, R.drawable.icon_question,
                             "มีช่องว่าง", "กรุณากรอกข้อมูลให้ครบค่ะ");
                 } else {
-                    getDateFromDatePicker();
-                    showLog();
+
+                    if ((latADouble == 0)||(lngADouble == 0)) {
+                        MyAlertDialog myAlertDialog = new MyAlertDialog();
+                        myAlertDialog.MyDialog(InfromActivity.this,R.drawable.icon_question,
+                                "ยังไม่เลือกพิกัด","กรุณาเลือก พิกัดที่เกิดเหตุ");
+
+
+                    } else {
+                        getDateFromDatePicker();
+
+                        getLatlng();
+
+
+                        showLog();
+                    }
+
                 }
 
                 break;
         }//switch
 
     }//onClick
+
+    private void getLatlng() {
+        laString = Double.toString(latADouble);
+        longString = Double.toString(lngADouble);
+    }
 
     private void typeController() {
 
