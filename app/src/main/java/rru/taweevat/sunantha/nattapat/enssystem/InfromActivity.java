@@ -1,6 +1,7 @@
 package rru.taweevat.sunantha.nattapat.enssystem;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -92,6 +93,7 @@ public class InfromActivity extends AppCompatActivity implements View.OnClickLis
                 break;
             case R.id.button11:
                 // Add location
+                startActivity(new Intent(InfromActivity.this, MapsActivity.class));
                 break;
             case R.id.button5:
                 //Update
